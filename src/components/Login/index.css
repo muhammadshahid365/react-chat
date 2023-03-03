@@ -1,0 +1,28 @@
+.login {
+  width: 50%;
+  margin: 0 auto;
+  border: solid 5px #273c75;
+  background-color: bisque;
+  padding: 1rem;  
+  text-align: center;
+  border-radius: 1rem;
+}
+
+.login input {
+  padding: 7px 12px;
+  width: 70%;
+  margin-right: 10px;
+  border-radius: 10px;
+  border: 2px solid #273c75;
+  font-size: larger;
+}
+
+.login button {
+  padding: 7px 12px;
+  font-size: larger;
+  color: white;
+  background-color: #8c7ae6;
+  border-radius: 10px;
+  border: 2px solid #273c75;
+  margin-top: 1rem;
+}

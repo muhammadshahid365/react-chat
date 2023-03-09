@@ -1,12 +1,12 @@
 import { useState } from 'react'
 
-function NewMessage({ sendJsonMessage, setMessages, userId }) {
+function NewMessage({ sendJsonMessage, setMessages, user }) {
   const [message, setMessage] = useState('')
   
   const handleSendMessage = (e) => {
     e.preventDefault()
     if(message.trim().length > 0){
-      sendJsonMessage({message, type: 'chat', userId})
+      sendJsonMessage({message, type: 'chat', user})
       setMessages(old => ([
         ...old,
         { message, user: 1 }

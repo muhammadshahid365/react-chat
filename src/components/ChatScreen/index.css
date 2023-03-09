@@ -35,6 +35,13 @@
   background-color: #353b48;
 }
 
+span.sender-name {
+  display: block;
+  color: blue;
+  background-color: bisque;
+  font-size: 0.8rem;
+}
+
 .new-message {
   height: 7%;
   display: flex;

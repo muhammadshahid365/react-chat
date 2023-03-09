@@ -6,7 +6,7 @@ function ChatBox({ messages }) {
     <div className='chat-box'>
       {
         messages.map(msg => (
-          <Message message={msg.message} klass={msg.user === 1 ? 'first-chat' : 'second-chat'} />
+          <Message message={msg} klass={msg.user === 1 ? 'first-chat' : 'second-chat'} />
         ))
       }
     </div>

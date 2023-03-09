@@ -8,6 +8,8 @@ function Login({ setLoginInfo, sendJsonMessage }) {
 
   useEffect(() => {
     const url = 'http://ec2-54-188-94-253.us-west-2.compute.amazonaws.com:8000/verify-token'
+    // const url = 'http://localhost:8000/verify-token'
+    
     fetch(url, {
       method: 'POST',
       headers: {
@@ -27,7 +29,7 @@ function Login({ setLoginInfo, sendJsonMessage }) {
 
   const login = (e) => {
     const url = 'http://ec2-54-188-94-253.us-west-2.compute.amazonaws.com:8000/login'
-    // const url = 'https://messaging-azr4.onrender.com/login'
+    // const url = 'http://localhost:8000/login'
     e.preventDefault()
     fetch(url, {
       method: 'POST',

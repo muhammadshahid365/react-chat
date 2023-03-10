@@ -7,9 +7,9 @@ function Login({ setLoginInfo, sendJsonMessage }) {
   const [previousToken, setPreviousToken ] = useState(localStorage.getItem('token'))
 
   useEffect(() => {
-    const url = 'http://ec2-54-188-94-253.us-west-2.compute.amazonaws.com:8000/verify-token'
+    const url = 'http://ec2-54-244-59-69.us-west-2.compute.amazonaws.com:8000/verify-token'
     // const url = 'http://localhost:8000/verify-token'
-    
+
     fetch(url, {
       method: 'POST',
       headers: {
@@ -19,6 +19,11 @@ function Login({ setLoginInfo, sendJsonMessage }) {
     }).then(res => res.json())
       .then(res => {
         if(res.message === 'verified' && res.userId){
+          sendJsonMessage({
+            type: 'initialize',
+            userId: res.userId,
+            token: previousToken
+          })
           setLoginInfo({username: res.username, userId: res.userId, token: previousToken})
         } else {
           setPreviousToken(null)
@@ -28,7 +33,7 @@ function Login({ setLoginInfo, sendJsonMessage }) {
   }, [])
 
   const login = (e) => {
-    const url = 'http://ec2-54-188-94-253.us-west-2.compute.amazonaws.com:8000/login'
+    const url = 'http://ec2-54-244-59-69.us-west-2.compute.amazonaws.com:8000/login'
     // const url = 'http://localhost:8000/login'
     e.preventDefault()
     fetch(url, {

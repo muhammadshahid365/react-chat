@@ -6,7 +6,7 @@ function Nav() {
   const [loginInfo, setLoginInfo] = useContext(userContext)
 
   const logout = () => {
-    const url = 'http://ec2-54-188-94-253.us-west-2.compute.amazonaws.com:8000/logout'
+    const url = 'http://ec2-54-244-59-69.us-west-2.compute.amazonaws.com:8000/logout'
 
     fetch(url, {
       method: 'POST',

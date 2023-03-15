@@ -5,12 +5,12 @@ import NewMessage from './NewMessage'
 import useWebSocket from 'react-use-websocket'
 import Login from '../Login'
 import { userContext } from '../../App'
+import baseURL from '../../config/endpoint'
 
 function ChatScreen() {
   const [messages, setMessages] = useState([])
   const [loginInfo, setLoginInfo] = useContext(userContext)
-  // const wsURL = 'ws://localhost:8000'
-  const wsURL = 'ws://ec2-54-244-59-69.us-west-2.compute.amazonaws.com:8000'
+  const wsURL = `ws://${baseURL}:8000`
 
   const {
     sendMessage,
@@ -24,11 +24,10 @@ function ChatScreen() {
 
   useEffect(() => {
     if (lastJsonMessage !== null) {
-      console.log(lastJsonMessage)
       setMessages(old => ([...old, {
         message: lastJsonMessage.message,
         user: 2,
-        username: lastJsonMessage.username
+        username: lastJsonMessage.user.username
       }]))
     }
   }, [lastJsonMessage])

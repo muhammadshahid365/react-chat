@@ -1,12 +1,13 @@
 import { useContext } from 'react'
 import { userContext } from '../../App'
 import './index.css'
+import baseURL from '../../config/endpoint'
 
 function Nav() {
   const [loginInfo, setLoginInfo] = useContext(userContext)
 
   const logout = () => {
-    const url = 'http://ec2-54-244-59-69.us-west-2.compute.amazonaws.com:8000/logout'
+    const url = `http://${baseURL}:8000/logout`
 
     fetch(url, {
       method: 'POST',

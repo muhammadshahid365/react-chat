@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './index.css'
+import baseURL from '../../config/endpoint'
 
 function Login({ setLoginInfo, sendJsonMessage }) {
   const [username, setUsername] = useState('')
@@ -7,8 +8,7 @@ function Login({ setLoginInfo, sendJsonMessage }) {
   const [previousToken, setPreviousToken ] = useState(localStorage.getItem('token'))
 
   useEffect(() => {
-    const url = 'http://ec2-54-244-59-69.us-west-2.compute.amazonaws.com:8000/verify-token'
-    // const url = 'http://localhost:8000/verify-token'
+    const url = `http://${baseURL}:8000/verify-token`
 
     fetch(url, {
       method: 'POST',
@@ -18,13 +18,13 @@ function Login({ setLoginInfo, sendJsonMessage }) {
       body: JSON.stringify({previousToken})
     }).then(res => res.json())
       .then(res => {
-        if(res.message === 'verified' && res.userId){
+        if(res._id){
           sendJsonMessage({
             type: 'initialize',
-            userId: res.userId,
-            token: previousToken
+            userId: res._id,
+            token: res.token
           })
-          setLoginInfo({username: res.username, userId: res.userId, token: previousToken})
+          setLoginInfo({username: res.username, userId: res._id, token: res.token})
         } else {
           setPreviousToken(null)
           localStorage.removeItem('token')
@@ -33,9 +33,8 @@ function Login({ setLoginInfo, sendJsonMessage }) {
   }, [])
 
   const login = (e) => {
-    const url = 'http://ec2-54-244-59-69.us-west-2.compute.amazonaws.com:8000/login'
-    // const url = 'http://localhost:8000/login'
     e.preventDefault()
+    const url = `http://${baseURL}:8000/login`
     fetch(url, {
       method: 'POST',
       headers: {

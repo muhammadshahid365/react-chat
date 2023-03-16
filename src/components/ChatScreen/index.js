@@ -6,10 +6,14 @@ import useWebSocket from 'react-use-websocket'
 import Login from '../Login'
 import { userContext } from '../../App'
 import baseURL from '../../config/endpoint'
+import FriendsList from './FriendsList'
 
 function ChatScreen() {
   const [messages, setMessages] = useState([])
   const [loginInfo, setLoginInfo] = useContext(userContext)
+  const [friends, setFriends] = useState([])
+  const [selectedIndex, setSelectedIndex] = useState(0)
+
   const wsURL = `ws://${baseURL}:8000`
 
   const {
@@ -33,13 +37,22 @@ function ChatScreen() {
   }, [lastJsonMessage])
 
   if (!loginInfo.userId) {
-    return <Login setLoginInfo={setLoginInfo} sendJsonMessage={sendJsonMessage} />
+    return (
+      <Login
+        setLoginInfo={setLoginInfo}
+        sendJsonMessage={sendJsonMessage}
+        setFriends={setFriends}
+      />
+    )
   }
 
   return (
-    <div className='chat-screen'>
-      <ChatBox messages={messages} />
-      <NewMessage user={loginInfo} sendJsonMessage={sendJsonMessage} setMessages={setMessages} />
+    <div className='chat-container'>
+      <FriendsList friends={friends} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
+      <div className='chat-screen'>
+        <ChatBox messages={messages} />
+        <NewMessage user={loginInfo} sendJsonMessage={sendJsonMessage} setMessages={setMessages} />
+      </div>
     </div>
   )
 }

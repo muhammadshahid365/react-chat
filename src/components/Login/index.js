@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import './index.css'
 import baseURL from '../../config/endpoint'
 
-function Login({ setLoginInfo, sendJsonMessage }) {
+function Login({ setLoginInfo, sendJsonMessage, setFriends }) {
   const [username, setUsername] = useState('')
   const [error, setError] = useState('')
   const [previousToken, setPreviousToken ] = useState(localStorage.getItem('token'))
@@ -19,12 +19,9 @@ function Login({ setLoginInfo, sendJsonMessage }) {
     }).then(res => res.json())
       .then(res => {
         if(res._id){
-          sendJsonMessage({
-            type: 'initialize',
-            userId: res._id,
-            token: res.token
-          })
-          setLoginInfo({username: res.username, userId: res._id, token: res.token})
+          initializeConnection(res)
+          setUser(res)
+          fetchFriends(res)
         } else {
           setPreviousToken(null)
           localStorage.removeItem('token')
@@ -44,19 +41,43 @@ function Login({ setLoginInfo, sendJsonMessage }) {
     })
       .then(res => res.json())
       .then(res => {
-        if(res.userId){
-          sendJsonMessage({
-            type: 'initialize',
-            userId: res.userId,
-            token: res.token
-          })
-          setLoginInfo({username, userId: res.userId, token: res.token})
+        if(res._id){
+          initializeConnection(res)
           localStorage.setItem('token', res.token)
+          setUser(res)
+          fetchFriends(res)
         }else {
           setError(res.message)
         }
       })
   }
+
+  const initializeConnection = res => {
+    sendJsonMessage({
+      type: 'initialize',
+      userId: res._id,
+      token: res.token
+    })
+  }
+
+  const setUser = (user) => {
+    setLoginInfo({username: user.username, userId: user._id, token: user.token})
+  }
+
+  const fetchFriends = (user) => {
+    const url = `http://${baseURL}:8000/friends-list`
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+      .then(res => res.json())
+      .then(res => {
+        setFriends(res)
+      })
+  }  
 
   return (
     <div className='login'>

@@ -1,15 +1,36 @@
+.chat-container {
+  height: 75vh;
+  width: 80%;
+  display: flex;
+  margin: 10px auto;
+  background-color: aquamarine;
+}
+
+.chat-container .friends-list {
+  width: 30%;
+  background-color:cadetblue;
+  border: solid 5px #273c75;
+  border-right: none;
+  border-radius: 10px 0 0 10px;
+}
+
+.friends-list li {
+  cursor: pointer;
+}
+
 .chat-screen {
   background-color: bisque;
-  width: 75%;
-  height: 75vh;
-  margin: 10px auto;
+  width: 70%;
+  /* margin: 10px auto; */
   border: solid 5px #273c75;
-  border-radius: 10px;
+  border-left: none;
+  border-radius: 0 10px 10px 0;
   padding: 0 10px;
 }
 
 .chat-box {
   height: 90%;
+  overflow-y: auto;
 }
 
 .message {

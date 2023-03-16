@@ -1,4 +1,4 @@
-const ENV = 'production'
+const ENV = 'development'
 
 export default (
   ENV === 'development' ? 'localhost':
